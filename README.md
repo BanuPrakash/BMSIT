@@ -193,6 +193,174 @@ Relationship between objects.
 3) Association
 4) Uses A
 
+===========
+
+Day 2:
+```
+   Mobile m =  new Mobile(); //valid
+
+   Is this Valid?
+   Product p = new Mobile(); //upcasting
+   Object o = new Mobile(); // upcasting
+
+    Mobile m = new Product(); // invalid, Not all products are mobiles
+
+```
+
+How Constructors Behave in inheritance:
+
+```
+    class Product {
+        Product() {
+            sop("P1");
+        }
+
+        Product(int id, String name){
+            sop("P2");
+        }
+    }
+
+
+    class Mobile extends Product {
+        Mobile(){
+            sop("M1");
+        }
+
+        Mobile(int id, String name, String connectivity) {
+            sop("M2");
+        }
+    }
+
+    new Mobile(); // P1, M1
+
+    new Mobile(63,"MotoG", "5G"); // P1, M2
+```
+
+Second run:
+
+```
+    class Product {
+        Product() {
+            sop("P1");
+        }
+
+        Product(int id, String name){
+            sop("P2");
+        }
+    }
+
+
+    class Mobile extends Product {
+        Mobile(){
+            sop("M1");
+        }
+
+        Mobile(int id, String name, String connectivity) {
+            super(id, name); // way to explicitly chain to base class constructor
+            sop("M2");
+        }
+    }
+
+    new Mobile(); // P1, M1
+
+    new Mobile(63,"MotoG", "5G"); // P2, M2
+```
+
+Chaining to itself:
+
+```
+
+    class Mobile extends Product {
+        Mobile(){
+            sop("M1");
+        }
+
+        Mobile(int id, String name, String connectivity) {
+            this(); // way to chain  to different constructor of same class
+            sop("M2");
+        }
+    }
+
+     new Mobile(63,"MotoG", "5G"); //  P1, M1, M2
+
+```
+=========
+
+How methods behave in inheritance?
+
+```
+class Product {
+        double getPrice() {
+            return 100;
+        }
+
+        String getName(){
+            return "iPhone 17";
+        }
+    }
+
+
+    class Mobile extends Product {
+        String getConnectivity() {
+            return "5G";
+        }
+
+        // override
+        double getPrice() {
+            return 900;
+        }
+    }
+
+    Mobile m = new Mobile();
+    m.getName(); // valid? YES
+    m.getPrice(); // valid? 900
+
+    Product p = new Mobile();
+    p.getName(); //valid
+    p.getPrice(); // valid == 900, In Java all instance methods are virtual by default, dynamic binding
+    p.getConnectivity();
+
+```
+
+Rules of Overriding:
+1) method name has to be same
+2) parameters has to be same
+3) return type has to be same or sub-type
+```
+    class Account {
+        Account getAccount() {
+            ...
+        }
+    }
+
+    class SavingsAccount extends Account {
+        // valid overriding
+        SavingsAccount getAccount() {
+            ...
+        }
+    }
+```
+4) visibility: same or enhances; can't weaken the visibility
+default method can be made public
+protected method can be made public
+
+can we make private method public and override? : NO
+
+=======================
+
+```
+
+Product p = new Mobile();
+(p instanceof Mobile) ==> true
+(p instanceof Product) ===> true
+(p instanceof Object) ===> true
+(p instanceof Tv) ==> false
+
+(p.getClass() == Mobile.class) ==> true
+(p.getClass() == Product.class) ==> false
+(p.getClass() == Object.class) ==> false
+(p.getClass() == Tv.class) ==> false
+
 
 
 
