@@ -534,8 +534,94 @@ Exception object:
 2) Why?
 3) Where?
 
+Exceptions are pushed up the call stack;
+
+main () --> a() --> b() --- c();
+if exception occurs in c() and not handled excetion is propagated to b(); similarly in b() if not handled it is passed on to a() ...
+
+In case of checked exceptions we need to use "throws" to push the exception up the call stack.
+
+=====
+
+Realization relationship.
+
+A Component/object will realize the behiour specified by other in order to communicate.
+
+Program to Contract.
+
+In Java we use interface for this.
+
+Syntax:
+```
+    interface interfaceName {
+        constants
+        abstract methods
+        can also have default methods [ from Java 5 ]
+    }
+
+    Simmilar to abstract class it can't be instantiated
+
+```
+
+Why program to interface?
+1) DESIGN
+2) iMPLEMENATION
+3) INTEGRATION
+4) TESTING
+5) OCP
+
+public void register(User user);
+public Products[] getProducts();
+public User login(String username, String password);
 
 
+```
+    Client:
+
+    try {
+        User user = new User(....);
+        UserDao userDao = new UserDaoSqlImplementation();
+        userDao.register(user);
+    } catch(PersistenceException ex) {
+        message
+    }
+
+    // by default all methods are abstract and public
+    public interface UserDao {
+        void register(User user) throws PersistenceException;
+    }
+
+
+    // realization
+    public class UserDaoSqlImplementation implements UserDao {
+        public  void register(User user) throws PersistenceException{
+            try {
+            // logic
+            } catch(SQLException ex) {
+                if(ex.getErrorCode() == 1521){
+                   throw new PersistenceException("User already exists : " + user.getEmail());
+                } else if(ex.getErrorCode() == 9001) {
+                    ..
+                }
+            }
+        }
+    }
+
+      public class UserDaoMongoDbImplementation implements UserDao {
+        public  void register(User user) throws PersistenceException{
+            try {
+            // logic
+            } catch(MongoException ex) {
+                if(ex.getErrorCode() == 9234){
+                   throw new PersistenceException("User already exists : " + user.getEmail());
+                } else if(ex.getErrorCode() == 155) {
+                    ..
+                }
+            }
+        }
+    }
+
+```
 
 
 
