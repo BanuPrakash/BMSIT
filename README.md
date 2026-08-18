@@ -361,7 +361,178 @@ Product p = new Mobile();
 (p.getClass() == Object.class) ==> false
 (p.getClass() == Tv.class) ==> false
 
+====
 
+context.method(arguments);
+p.getConnectivity(); // know the method name, p is implicit this
+
+m.invoke(p); // p is explicit this
+
+====
+Web Based:
+```
+  private static void printDetailsOCP(Product[] products) {
+        PrintWriter out = response.getWriter();
+        System.out.println("OCP:");
+        for(Product p : products) {
+           Method[] methods =  p.getClass().getMethods();
+           for(Method m : methods) {
+               if(m.getName().startsWith("get")) {
+                   try {
+                       Object ret = m.invoke(p); // explicitly pass the context
+                       out.print("<tr>");
+                       out.println("<td>" + m.getName().substring(3).toUpperCase() + " </td> <td>" + ret + "</td>);
+                       out.print("</tr>")
+                   } catch (Exception ex) {
+                       ex.printStackTrace();
+                   }
+               }
+           }
+        }
+    }
+```
+
+==================
+
+Keyword: abstract class and methods
+
+keyword: final
+```
+1) constant
+public static final double PI = 3.14159;
+
+2) prevents inheritance
+final class can't be inherited
+
+3) prevents overiding
+
+4) const pointer
+
+final int[] data = {5,2,7,21};
+data[0] = 99; // valid
+data = new int[6]; // invalid
+
+public void validateCustomer(final Customer c) {
+    c.setEmail(...); // valid
+    c = new Customer(); // invalid
+}
+```
+
+Exception Handling:
+
+Any abnormal condition that arises during program execution is an exception.
+
+exceptions can be classified as "Exception" or "Error"
+
+```
+    OutOfMemoryError; solution is increase memory or increase Heap size on re-rerun
+    StackOverFlowError: recursion whithou proper exit condition [ by default stack is 64kb]
+```
+
+Exception can be classfied as Checked and Unchecked Type of exceptions:
+```
+    Unchecked type of exceptions:
+    1) NullPointerException
+    2) ArrayIndexOutOfBoundsException
+    3) ClassCastException
+    4) ArithmeticException
+
+    if(x != 0) {
+        result = y / x;
+    }
+
+    if(emp != null) {
+        em.getSalary();
+    }
+    CheckedException:
+    1) IOException
+    2) FileNotFoundException
+    3) SocketException
+    4) SQLException
+    5) ClassNotFoundException
+
+
+    Syntax:
+    try {
+        // statements
+    } catch(ExceptionType1 ex) {
+
+    } catch(ExceptionType2 ex) {
+
+    }
+    ...
+    finally {
+        // optional
+    }
+
+    Example:
+    try {
+        open file 1
+        read file 1
+        open DB connection
+        write to DB
+    } catch(SQLException ex) {
+
+    } catch(IOException ex) {
+
+    } finally {
+        close DB connection
+        close file connection
+    }
+
+    finally block is a compulsory execute code; gets called irreseoective of exception occurs or not
+
+    int getCount() {
+        try {
+            int x = 10;
+            int y = 2;
+            if( x > 0) {
+                return x /y;
+            }
+         } finally {
+            return 100;
+        }
+    }
+    
+    Keywords:
+    try, catch, finally, throw and throws
+
+// Valid
+     try {
+        open file 1
+        read file 1
+        open DB connection
+        write to DB
+    } catch(FileNotFoundException ex) {
+
+    } catch(IOException ex) {
+
+    } finally {
+        close DB connection
+        close file connection
+    }
+
+// invalid code
+ try {
+        open file 1
+        read file 1
+        open DB connection
+        write to DB
+    } catch(IOException ex) {
+
+    } catch(FileNotFoundException ex) {
+            // unreachable code
+    } finally {
+        close DB connection
+        close file connection
+    }
+
+```
+
+Exception object:
+1) What went wrong?
+2) Why?
+3) Where?
 
 
 

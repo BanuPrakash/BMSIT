@@ -3,7 +3,7 @@ package edu.bmsit.prj.entity;
 // Product is a specialization of java.lang.Object
 // extends -- Inheritance
 // Think Liskov Substitution Principal
-public class Product  {
+public abstract class Product  {
     private int id;
     private String name;
     private double price;
@@ -41,7 +41,10 @@ public class Product  {
         this.price = price;
     }
 
-    public boolean isExpensive() {
-        return  false;
-    }
+
+//    public boolean isExpensive() {
+//        return  false;
+//    }
+    // pure virtual function
+    public abstract boolean isExpensive() ;
 }

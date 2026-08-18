@@ -4,6 +4,8 @@ import edu.bmsit.prj.entity.Mobile;
 import edu.bmsit.prj.entity.Product;
 import edu.bmsit.prj.entity.Tv;
 
+import java.lang.reflect.Method;
+
 public class ProductClient {
     public static void main(String[] args) {
         Product[] products = new Product[5]; // Array of pointers, not created 5 products
@@ -17,6 +19,25 @@ public class ProductClient {
 
         printExpensiveOnes(products);
         printDetails(products);
+        printDetailsOCP(products);
+    }
+
+    // OCP
+    private static void printDetailsOCP(Product[] products) {
+        System.out.println("OCP:");
+        for(Product p : products) {
+           Method[] methods =  p.getClass().getMethods();
+           for(Method m : methods) {
+               if(m.getName().startsWith("get")) {
+                   try {
+                       Object ret = m.invoke(p); // explicitly pass the context
+                       System.out.println(m.getName().substring(3).toUpperCase() + " : " + ret);
+                   } catch (Exception ex) {
+                       ex.printStackTrace();
+                   }
+               }
+           }
+        }
     }
 
     // IS this OCP? NO
