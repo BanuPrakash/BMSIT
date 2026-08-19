@@ -819,3 +819,32 @@ https://rxmarbles.com/
     // custom logic on prds
 
 ```
+
+Set: duplicates are not supported
+HashSet: uses hashCode() and equals() to identify duplicates and position of object in container
+
+HashCode?
+Numerical representation of Object.
+Rules:
+1) 2 similar objects should have same hashcode
+2) dissimilar objects should have different hashcode; but can collide
+
+```
+class Rectangle {
+
+    public int hashCode() {
+        return width * breadth;
+    }
+}
+
+
+Rectangle r1 = new Rectangle(4,5);
+Rectangle r2 = new Rectangle(5,4);
+Rectangle r3 = new Rectangle(20,1);
+Rectangle r4 = new Rectangle(10,2);
+Rectangle r5 = new Rectangle(2,10);
+
+public int hashCode() {
+        return 2 pow(0) + width * 2 pow(1) + breadth;
+    }
+```

@@ -26,6 +26,8 @@ public class StreamExample {
         // forEach takes action
         products.stream().filter(p -> p.getCategory().equals("mobile")).forEach(p -> System.out.println(p));
 
+        products.stream().filter(p -> p.getCategory().equals("mobile")).forEach(System.out::println); // method reference
+
         // can be easily converted to Multi-threaded
         products.parallelStream().filter(p -> p.getCategory().equals("mobile")).forEach(p -> System.out.println(p));
 
@@ -59,6 +61,6 @@ public class StreamExample {
         Map<String, List<Product>> category  =
                 products.stream().collect(Collectors.groupingBy(p-> p.getCategory()));
 
-        System.out.println(category.get("Electronics"));
+        category.get("Electronics").stream().map(p->p.getName()).forEach(name -> System.out.println(name));
     }
 }

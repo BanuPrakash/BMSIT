@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Product implements Comparable<Product>{
     private int id;
     private String name;
@@ -60,5 +62,30 @@ public class Product implements Comparable<Product>{
                 ", price=" + price +
                 ", category='" + category + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != product.id) return false;
+        if (Double.compare(price, product.price) != 0) return false;
+        if (!Objects.equals(name, product.name)) return false;
+        return Objects.equals(category, product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        temp = Double.doubleToLongBits(price);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (category != null ? category.hashCode() : 0);
+        return result;
     }
 }
