@@ -3,7 +3,7 @@ package edu.bmsit.prj.entity;
 // Product is a specialization of java.lang.Object
 // extends -- Inheritance
 // Think Liskov Substitution Principal
-public abstract class Product  {
+public abstract class Product  implements  Comparable{
     private int id;
     private String name;
     private double price;
@@ -47,4 +47,15 @@ public abstract class Product  {
 //    }
     // pure virtual function
     public abstract boolean isExpensive() ;
+
+    @Override
+    public int compareTo(Object o) {
+        Product other = (Product) o;
+        return Double.compare(this.price, other.price);
+    }
+
+    @Override
+    public String toString() {
+        return id + " , " + name + ", " + price;
+    }
 }

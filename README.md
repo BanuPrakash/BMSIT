@@ -623,5 +623,142 @@ public User login(String username, String password);
 
 ```
 
+Abstract classes vs interfaces
+
+Abstract classes can have instance variables / state;  interfaces only have static constants.
+Abstract classes usually has partial implmentation; example Product; interface are complete abstract
+Abstract classes for Specialization relationship
+interfaces are for realization relationship.
+
+======================================
+
+Day 3
+
+````
+
+class Base {
+    public static void test() {
+        sop("B1");
+    }
+}
+
+class Sub extends Base {
+     public static void test() {
+        sop("S1");
+    }
+}
+
+Base b = new Sub();
+b.test(); // B1
+
+```
+
+Important methods inherited from java.lang.Object
+1) String toString()
+2) boolean equals(Object other);
+Object equality ==> meant to compare contents of object
+```
+    Recatangle r1 = new Rectangle(4,5);
+    Rectangle r2 = new Rectangle(4,5);
+    if(r1 == r2) {
+        ...
+    }
+    if (r1.equals(r2)) { //evaluates to false if Rectangle doesn't override
+        ...
+    }
+
+
+    String s1 = "Hello";
+    String s2 = "Hello";
+
+    if(s1 == s2) {
+        sop("1");
+    }
+    if(s1.equals(s2)) {
+        sop("2")
+    }
+```
+3) int hashCode()
+4) Class getClass()
+5) wait()
+6) wait(long ms)
+7) notify()
+8) notifyAll()
+
+===========================
+
+Anonymous class: class without a name; can create from abstract class or interfaces.
+
+```
+    interface Flyable {
+        void fly();
+    }
+
+    class Bird implements Flyable {
+        // name
+        // age
+        // behaviour
+        public void fly() {
+
+        }
+    }
+
+    Bird b = new Bird(); // valid
+    b.fly();
+
+    Flyable f = new Bird();
+    f.fly();
+
+    Flyable f = new Flyable(); // invalid
+
+    Flyable f = new Flyable() {
+        public void fly() {
+            sop("Jump with wings!!!");
+        }
+    };
+
+    FunctionalInterface is an interface where only one method has to implmented; Lambda expression can be used instead of anonymous class for FunctionalInterface.
+
+```
+
+Generics like C++ templates but different
+
+```
+    class Rectangle<T extends Number> {
+        T width;
+        T breadth;
+
+
+    }
+
+    Rectangle<Integer> r1 = new Rectangle<>(4,5);
+    Rectangle<Double> r2 = new Rectangle<>(6.7, 2.4);
+    Rectangle<String> r3 = new Rectangle<>("A", "B"); / /error
+
+    Type Wrapper classes: Byte, Short, Integer, Long, Double, Float, ...
+
+    int x = 10;
+    Integer iX = x; // boxing or wrapping
+    int y = iX; // unboxing or unwrapping
+
+```
+
+Java Collection Framework:
+Data Containers
+Array is a data container and has to be the first choice for storing data.
+Limitations: Size is fixed, can't grow nor shrink; adding / removing from arbitrary position need O(n) operations
+
+JCF: 
+1) interfaces
+2) implementation classes
+3) Utility / algorithm classes : max, min, binarySearch, sort, shuffle, reverse, ...
+
+Collections
+
+
+
+
+
+
 
 
