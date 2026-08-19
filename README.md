@@ -755,10 +755,30 @@ JCF:
 
 Collections
 
+```
+List                                            Set
+1) supports duplicate                           unique
+2) supports index based operation               won't
+remove(3);
+get(5);
+3) ordered                                      Not ordered
+4) can be re-ordered                            can't
+
+```
 
 
+List is an interface;
+ArrayList, LinkedList are implmentations of List interface
+Vector also implements List [Legacy, not advised to be used because of Locking mechansim and allowing only one thread at a time]
+3rd Party implmentations are also availble for List interface like Apache Collections and VAVR collections
 
+Different ways of using List implementation
+```
+ArrayList list = new ArrayList(); // avoid, program to interface
 
+// supports heterogenous data, containers should be homogenoius -- Type Safety
+List list = new ArrayList(); // avoid this, use generics
 
+List<Product> products = new ArrayList<>(); // prefered
 
-
+```

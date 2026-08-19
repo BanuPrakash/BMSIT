@@ -16,5 +16,15 @@ public class ProductArraysExample {
         for(Product p : products) {
             System.out.println(p);
         }
+
+        System.out.println("Sort by Price: use Lambda");
+
+//        Arrays.sort(products, (p1,p2) -> (int)(p1.getPrice() - p2.getPrice()));
+
+        Arrays.sort(products, (p1,p2) -> Double.compare(p1.getPrice(), p2.getPrice()));
+        for(Product p : products) {
+            System.out.println(p);
+        }
+
     }
 }
