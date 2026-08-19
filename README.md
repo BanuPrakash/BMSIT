@@ -782,3 +782,40 @@ List list = new ArrayList(); // avoid this, use generics
 List<Product> products = new ArrayList<>(); // prefered
 
 ```
+
+Java Streams: 
+represent a pipeline of computational operations used to process sequences of data elements in a declarative and functional manner. 
+
+A Java Stream is not a data structure; it does not store data elements. 
+
+Instead, it wraps an underlying data source—such as a collection, an array, or an I/O channel—and carries its elements through a structured pipeline of transformations to produce a final result.
+
+Operations performed on a stream produce a result but never modify the original data source.
+
+Stream operations do not execute until a final outcome is requested, optimizing performance.
+
+Elements are visited exactly once. Once a stream is closed or consumed, it cannot be reused.
+
+Common operations done on Stream:
+Intermediary Operations:
+1) filter: subset
+2) map: transform data
+3) skip
+4) limit
+5) flatMap: complex stream to simple stream
+
+Terminal Operations
+1) collect
+2) forEach
+3) reduce: aggregate: sum, count, avg
+
+https://rxmarbles.com/
+
+```
+ List<Product> prds = products.stream()
+                .filter(p -> p.getCategory().equals("Electronics") || p.getCategory().equals("mobile"))
+                .collect(Collectors.asList());
+
+    // custom logic on prds
+
+```
