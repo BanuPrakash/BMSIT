@@ -592,7 +592,7 @@ interfaces are for realization relationship.
 
 Day 3
 
-````
+```
 
 class Base {
     public static void test() {
@@ -615,6 +615,7 @@ Important methods inherited from java.lang.Object
 1) String toString()
 2) boolean equals(Object other);
 Object equality ==> meant to compare contents of object
+
 ```
     Recatangle r1 = new Rectangle(4,5);
     Rectangle r2 = new Rectangle(4,5);
@@ -636,6 +637,7 @@ Object equality ==> meant to compare contents of object
         sop("2")
     }
 ```
+
 3) int hashCode()
 4) Class getClass()
 5) wait()
