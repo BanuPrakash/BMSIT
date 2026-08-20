@@ -901,5 +901,37 @@ Practicle example of where Daemon threads are used:
 A Special type of Thread is created  extends Thread [ IS A]
 A part of code has to run as Thread use Runnable [ HAS A]
 
+=====================
 
+Thread Safety:
+A member is said to be thread safe if it doesn't get corrupted in multi-threaded environment.
 
+Local Variables:  Stack; each thread has a seperated stack --> Thread Safe
+instance variables: Heap; shared by threads --> Not Thread safe
+static variables: Metaspace; shared by threads -> Not Thread Safe
+volatile members: Heap area; Thread safe
+
+Why Use a Volatile Variable?
+Stops Caching: The program must read the real memory address every time instead of using an old saved copy.
+
+read from main memory
+Mutate
+write back to main memory
+
+Only Atomic members should be marked as volatile like boolean
+
+x++; //looks like one instruction; but 32 bits has to be moved
+
+join(); used to specify that the caller thread has to wait for other thread to finish its execution
+
+synchronized: to mark a critical section; only one thread is allowed to enter critical section at any given point of point.
+
+```
+    synchronized a() {
+        b();
+    }
+
+    synchronized b() {
+        
+    }
+```
