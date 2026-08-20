@@ -1,4 +1,4 @@
-# BMSIT: Java Fundamentals
+# BMSIT
 
 ```
 Banu Prakash C
@@ -848,3 +848,98 @@ public int hashCode() {
         return 2 pow(0) + width * 2 pow(1) + breadth;
     }
 ```
+
+
+======================
+
+Day 4
+
+Java Concurrency
+
+Process: Program in execution; Process should have at least one unit of working executing
+
+Unit of Work --> Thread
+If a process is having only one unit of work then we call it as Single Threaded applicaiton;
+If a process supports multiple units o f work --> Multi Threaded application.
+
+Notepad -- Single Threaded
+Task Manager -- Single Threaded
+
+Word, Eclipse, Powerpoint, IntelliJ IDE --> Multi Threaded application.
+
+Word:
+Typing / editing the document -- Thread
+Spell Check -- Thread
+Grammer check -- Thread
+AutoSave -- Thread
+
+Why do I need multi-threaded applications?
+1) Avoid Starvation ( More Responsive )
+2) Since threads are decoupled, even if one unit of work [thread] fails applicaiton can still run
+3) Optimization of resource usage[ sharing of resources ]
+* CPUs
+* Memory
+
+Threads: Lightweight process; shares Metaspace [ loaded classes] and Objects [ Heap]; each thread will have seperate stack.
+
+=============================
+
+System Threads: System Group: Garbage Collector, Reference Handler, Signal Dispatcher
+User Threads: Main Group: Main Thread
+
+```
+    interface Runnable {
+        void run();
+    }
+```
+
+Thread class: to control life-cycle of a Thread
+a) start()
+b) sleep(long ms)
+c) join()
+d) interrupt()
+e) yield()
+Deprecated Methods:
+f) suspend()
+g) resume()
+i) stop()
+
+```
+ public class GrammerCheck extends Thread {
+
+    run() {}
+ }
+
+
+ public class SpellCheck extends Thread {
+    run() {}
+ }
+
+ SpellCheck t1 = new SpellCheck();
+ GrammerCheck t2 = new GrammerCheck();
+
+ t1.start();
+ t2.start();
+
+
+```
+
+Priority 1 (lowest) to 10 (Highest)
+
+JVM waits for the last NonDaemon Thread to finish its execution before terminating.
+Main is a Non-Daemon Thread, all threads created by main thread by default becomes Non Daemon.
+
+Practicle example of where Daemon threads are used:
+
+```
+    while(true) {
+        sop("Print Time"); // generally in Gaming application
+    }
+
+```
+
+A Special type of Thread is created  extends Thread [ IS A]
+A part of code has to run as Thread use Runnable [ HAS A]
+
+
+

@@ -4,7 +4,6 @@ import java.util.TreeSet;
 
 public class TreeSetExample {
     public static void main(String[] args) {
-
         // Red Black Tree
 //        Set<Product> products = new TreeSet<>(); // uses Comparable interface
 
