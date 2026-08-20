@@ -932,6 +932,8 @@ synchronized: to mark a critical section; only one thread is allowed to enter cr
     }
 
     synchronized b() {
-        
+
     }
 ```
+
+InterThread Communication using wait(), notify() and notifyAll();

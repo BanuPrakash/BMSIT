@@ -36,12 +36,29 @@ public class Account {
         bal += amt;
         setBalance(bal);
         System.out.println(name + " modifes balance !!!" + bal);
+        notifyAll(); // inform threads in wait list that state is changed and they can be going to runnable
     }
 
     public synchronized void withdraw(String name, double amt) {
         System.out.println(name + " trying to withdraw : " + amt);
         System.out.println(name + " getting balance");
+        int count = 0;
+        while(getBalance() < amt) {
+            count++;
+            System.out.println("Insufficient Balance : " + getBalance());
+            if(count >= 3) {
+                System.out.println("Transaction Failed!!");
+                return;
+            }
+            try {
+                wait(15000); // thread goes to wait state by releasing the lock
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         double bal = getBalance();
+        System.out.println(name + " got balance :" + bal);
+
         System.out.println(name + " setting balance ");
         bal -= amt;
         setBalance(bal);
