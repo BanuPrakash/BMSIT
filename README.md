@@ -368,8 +368,10 @@ p.getConnectivity(); // know the method name, p is implicit this
 
 m.invoke(p); // p is explicit this
 
-====
+```
+ 
 Web Based:
+
 ```
   private static void printDetailsOCP(Product[] products) {
         PrintWriter out = response.getWriter();
@@ -397,6 +399,7 @@ Web Based:
 Keyword: abstract class and methods
 
 keyword: final
+
 ```
 1) constant
 public static final double PI = 3.14159;
@@ -424,19 +427,20 @@ Any abnormal condition that arises during program execution is an exception.
 
 exceptions can be classified as "Exception" or "Error"
 
-```
     OutOfMemoryError; solution is increase memory or increase Heap size on re-rerun
     StackOverFlowError: recursion whithou proper exit condition [ by default stack is 64kb]
-```
+
 
 Exception can be classfied as Checked and Unchecked Type of exceptions:
-```
+
+
     Unchecked type of exceptions:
     1) NullPointerException
     2) ArrayIndexOutOfBoundsException
     3) ClassCastException
     4) ArithmeticException
 
+```
     if(x != 0) {
         result = y / x;
     }
@@ -552,6 +556,7 @@ Program to Contract.
 In Java we use interface for this.
 
 Syntax:
+
 ```
     interface interfaceName {
         constants
@@ -575,53 +580,6 @@ public Products[] getProducts();
 public User login(String username, String password);
 
 
-```
-    Client:
-
-    try {
-        User user = new User(....);
-        UserDao userDao = new UserDaoSqlImplementation();
-        userDao.register(user);
-    } catch(PersistenceException ex) {
-        message
-    }
-
-    // by default all methods are abstract and public
-    public interface UserDao {
-        void register(User user) throws PersistenceException;
-    }
-
-
-    // realization
-    public class UserDaoSqlImplementation implements UserDao {
-        public  void register(User user) throws PersistenceException{
-            try {
-            // logic
-            } catch(SQLException ex) {
-                if(ex.getErrorCode() == 1521){
-                   throw new PersistenceException("User already exists : " + user.getEmail());
-                } else if(ex.getErrorCode() == 9001) {
-                    ..
-                }
-            }
-        }
-    }
-
-      public class UserDaoMongoDbImplementation implements UserDao {
-        public  void register(User user) throws PersistenceException{
-            try {
-            // logic
-            } catch(MongoException ex) {
-                if(ex.getErrorCode() == 9234){
-                   throw new PersistenceException("User already exists : " + user.getEmail());
-                } else if(ex.getErrorCode() == 155) {
-                    ..
-                }
-            }
-        }
-    }
-
-```
 
 Abstract classes vs interfaces
 
