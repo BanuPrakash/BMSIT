@@ -19,7 +19,7 @@ public class ProductDaoJdbcImpl implements ProductDao{
             ps.setDouble(2, product.getPrice());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistenceException("unable to add Product!!!");
+            throw new PersistenceException("unable to add Product!!!", e);
         } finally {
             DBUtil.closeConnection(con);
         }
