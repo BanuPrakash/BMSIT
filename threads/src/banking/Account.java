@@ -35,7 +35,7 @@ public class Account {
         System.out.println(name + " setting balance ");
         bal += amt;
         setBalance(bal);
-        System.out.println(name + " modifes balance !!!" + bal);
+        System.out.println(name + " modifies balance !!!" + bal);
         notifyAll(); // inform threads in wait list that state is changed and they can be going to runnable
     }
 

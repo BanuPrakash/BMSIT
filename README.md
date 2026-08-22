@@ -937,3 +937,164 @@ synchronized: to mark a critical section; only one thread is allowed to enter cr
 ```
 
 InterThread Communication using wait(), notify() and notifyAll();
+
+============================
+
+Thread, Runnable, synchronized
+
+Java 5 introduced New Thread APIs: Doug Lea
+
+Issues with Java Threads:
+1) One lock per object
+2) Only the owning one can release the lock
+3) Deadlocks were happening in core Thread api
+```
+    class BankingService {
+        public void transferFunds(Account fromAcc, Account toAcc, double amt) {
+            synchronized(fromAcc) {
+                synchronized(toAcc) {
+                    fromAcc.withdraw(amt);
+                    toAcc.deposit(amt);
+                } // toAcc lock is released
+            }// fromAcc lock is released
+        }
+    }
+
+Rare occurence:
+Tx1:
+SB101 -> SB900 -- > 5000
+SB900 -> SB101 -- > 2000
+
+New Apis:
+ class BankingService {
+        public void transferFunds(Account fromAcc, Account toAcc, double amt) {
+                try {
+                    if(fromAcc.balLock.tryLock(2000)) {
+                        try {
+                            if(toAcc.balLock.tryLock(2000)) {
+                                  fromAcc.withdraw(amt);
+                                  toAcc.deposit(amt);
+                            }
+                        } finally {
+                            toAcc.balLock.unlock();
+                        }
+                    }
+                } finally {
+                    fromAcc.balLock.unlock();
+                }
+        }
+    }
+
+```
+4) Thread can't return a valid [void run()]
+    Callable interface instead of Runnable interface
+    interface Callable<T> {
+        T call() throws Exception;
+    }
+    Future: placeholder where Thread is going to place the data
+5) Thread can't throw the Exception
+6) Thread Pool
+
+====================
+
+Java Build Tools:
+1) Checkstyle: Coding Conventions [ Naming Conventions and Comments]
+2) PMD & FindBugs: Coding Standards: Clean Code: No Copy & Paste Code, empty catch blocks, wrong conditional statements.
+3) Build tools: Maven and Gradle
+4) Unit testing: JUnit and TestNG
+
+
+Maven:
+Apache Maven is a popular open-source build automation and project management tool used primarily for Java projects. 
+
+Developed by the Apache Software Foundation, it simplifies and standardizes the entire software development lifecycle—including compiling code, managing external libraries, running tests, and packaging applications [jar / war/ ear/ sar].
+
+Optionally:
+docker pull mysql // to get image
+
+docker run --name local-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=Welcome123 -d mysql
+
+========
+
+Day 5
+MAven: Build Automation tool for executing goals like :clean, compile, test, package, deploy
+Also tool to manage dependencies; Maven projects stadardize the application which makes it usable in any IDE.
+
+Maven: Local Repository, Remote Repository and Central Repository where "jar" files - dependencies are present. These jar's are linked to project.
+
+pom.xml file -- project object model where we configure dependencies and goals
+
+==================
+
+JDBC: Java Database Connectivity -- Integration Library
+JDBC Provides basic interfaces; implementation classes are provided by the database vendors
+
+Steps involved in Interacting with Database:
+1) Load database vendor provided classes into JVM -- drivers
+Class.forName("oracle.jdbc.Driver");
+Class.forName("com.mysql.cj.jdbc.Driver");
+
+2) Establish database Connection
+Connection con = DriverManager.getConnection(URL, USERNAME, PWD);
+
+getConnection() is a factory method; creates connection based on URL
+jdbc:oracle:thin:@153.13.66.92:1521:empdb
+jdbc:mysql://153.66.11.46:3306/empdb
+
+3) SEND SQL statements:
+3.1) Statement: use this in case if SQL is fixed/ Same SQL for n requests like
+select * from employees;
+3.2) PreparedStatement: PreCompiled Statement / Parameterized Statement; use this if SQL takes IN parameter
+select * from accounts where account_id = ?
+insert into employees values (?, ? , ?, ?)
+
+Avoid:
+SQL = "select * from accounts where account_id =" + accVariable;
+
+3.3) CallableStatement: invoke StoredProcedure; PASS IN, OUT, INOUT parameters
+
+CallableStatement stmt = conn.prepareCall("{call DO_Transaction("SB245", "SB9245", 9800.00)}")) {
+          
+```
+create procedure DO_Transaction(FROMACC, TOACC, AMT)
+    ...
+
+end procedure
+```
+
+4) Based on SQL we use executeUpdate(): int or executeQuery(): ResultSet
+executeUpdate(): for INSERT, DELETE and UPDATE
+executeQuery(): for SELECT statement
+
+ResultSet is a Cursor to fetched records
+
+5) Close connection in finally block.
+
+
+Lombok is a Java library that provides annotations to simplify Java development by automating the generation of boilerplate code. 
+
+Key features include automatic generation of getters, setters, equals, hashCode, and toString methods, as well as a facility for automatic resource management. 
+
+It aims to reduce the amount of manual coding, thereby streamlining the codebase and reducing potential for errors.
+==============
+
+Docker is an open platform that packages software into lightweight, isolated units called containers. 
+
+These containers share the host operating system's kernel, making them fast, portable, and consistent across any environment from a laptop to the cloud
+
+Image: Software -- MySQL / Oracle / Kafka 
+
+
+```
+docker exec -it local-mysql bash
+# mysql -u root -p
+Enter password: 
+
+mysql> create database bmsit_trg;
+mysql> use bmsit_trg;
+mysql> create table products(id int PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100), price double);
+mysql> insert into products values (0, 'iPhone 17', 98000);
+mysql> insert into products values (0, 'Sony Bravia', 218000);
+mysql> select * from products;
+```
+=================================

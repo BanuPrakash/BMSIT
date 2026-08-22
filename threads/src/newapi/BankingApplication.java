@@ -1,16 +1,13 @@
-package banking;
-
-import java.util.concurrent.Executor;
-import java.util.concurrent.locks.Lock;
+package newapi;
 
 public class BankingApplication {
     public static void main(String[] args) {
         Account account = new Account("SB123", 5000);
 
         TransactionThread t1 = new TransactionThread(account, TransactionType.CREDIT, "Peter", 2500.00);
-        TransactionThread t2 = new TransactionThread(account, TransactionType.DEBIT, "\tRoger", 9000.00);
+        TransactionThread t2 = new TransactionThread(account, TransactionType.DEBIT, "\tRoger", 3000.00);
         TransactionThread t3 = new TransactionThread(account, TransactionType.CREDIT, "\t\tRita", 2000.00);
-
+        
 
         t2.start(); // main t1 and t2 are ready
         try {
