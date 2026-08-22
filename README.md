@@ -1098,3 +1098,73 @@ mysql> insert into products values (0, 'Sony Bravia', 218000);
 mysql> select * from products;
 ```
 =================================
+
+Annotations: Metadata -- Data about data.
+Syntax:
+```
+    @interface AnnotationName {
+        properties / setter and getter
+        // no variable or constants
+        // no methods
+    }
+```
+
+1) Who uses it?
+    COMPILER , CLASSLOADER , RUNTIME
+2) Where can I use it?
+    TYPE, METHOD, PARAMETER, CONSTRUCTOR
+
+@Override
+Used by Compiler, applied to a method
+
+=====
+
+```
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.CLASS)
+public @interface Platform {
+    String target(); // property
+}
+
+
+@Platform(target="Samsung")
+public class CandyCrush extends Game {
+
+}
+```
+
+Runtime Annotations : @Table and @Column
+ORM: Object Relational Mapping
+
+
+```
+    @Table(name="BOOKS")
+    public class Book {
+
+        @Column(name="BOOK_ISBN")
+        isbn;
+
+        @Column(name="AMT", type="NUMERIC(12,2)")
+        price;
+    }
+
+
+    BOOKS
+    BOOK_ISBN   |  AMT
+
+
+
+```
+
+ByteCode Instrumentation: CGLIB / JavaAssist / ByteBuddy
+
+```
+List<Integer> numbers = Arrays.asList(5,2, 662, 22);
+
+public void print(List<?> data) {
+    sop(data.get(2)); // valid
+    data.set(1, 555); // not valid - no mutation
+}
+
+```
